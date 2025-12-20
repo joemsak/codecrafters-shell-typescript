@@ -13,11 +13,11 @@ const echo = input => {
 }
 
 const callback = input => {
-  switch (input) {
-    case 'exit':
+  switch (true) {
+    case input === "exit":
       rl.close()
       return
-    case ECHO_PATTERN:
+    case ECHO_PATTERN.test(input):
       echo(input)
       break
     default:
