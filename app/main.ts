@@ -6,7 +6,11 @@ const rl = createInterface({
 });
 
 const callback = input => {
-  if (input == 'exit') rl.close();
+  if (input == 'exit') {
+    rl.close();
+    return;
+  }
+
   console.error(`${input}: command not found`);
   rl.question("$ ", callback);
 };
