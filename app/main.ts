@@ -13,25 +13,29 @@ const BUILTINS = ["echo", "exit", "type"]
 const ECHO_PATTERN = /^echo\s/
 const TYPE_PATTERN = /^type\s/
 
+const say = msg => {
+  rl.output.write(`${msg}\n`)
+}
+
 const echo = input => {
   const toEcho = input.replace(ECHO_PATTERN, "")
-  rl.output.write(`${toEcho}\n`)
+  say(toEcho)
 }
 
 const type = async input => {
   const exe = input.replace(TYPE_PATTERN, "")
 
   if (BUILTINS.includes(exe)) {
-    echo(`${exe} is a shell builtin`)
+    say(`${exe} is a shell builtin`)
     return
   }
 
   const path = await getPath(exe);
 
   if (path) {
-    echo(`${exe} is ${path}`)
+    say(`${exe} is ${path}`)
   } else {
-    echo(`${exe}: not found`)
+    say(`${exe}: not found`)
   }
 }
 
@@ -61,14 +65,14 @@ const callback = async input => {
       await type(input)
       break
     case ECHO_PATTERN.test(input):
-      echo(exePath, input)
+      say(exePath, input)
       break
     case exePath !== undefined:
       const result = execSync(input)
       rl.output.write(result)
       break
     default:
-      echo(`${input}: command not found`)
+      say(`${input}: command not found`)
   }
 
   rl.question("$ ", callback)
