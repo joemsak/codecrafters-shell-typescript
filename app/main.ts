@@ -6,7 +6,7 @@ const rl = createInterface({
 });
 
 const callback = input => {
-  if (input == 'exit') {
+  if (input === 'exit') {
     rl.close();
     return;
   }
