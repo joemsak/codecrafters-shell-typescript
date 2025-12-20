@@ -55,7 +55,7 @@ const getPath = async command => {
 }
 
 const callback = async input => {
-  const exePath = getPath(input)
+  const exePath = await getPath(input)
 
   switch (true) {
     case input === "exit":
