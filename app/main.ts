@@ -20,14 +20,14 @@ const type = input => {
   const command = input.replace(TYPE_PATTERN, "")
   const paths = process.env.PATH.split(':')
 
-  let loc = ''
-
   for (const path of paths) {
-    loc = `${path}/${command}`
+    const loc = `${path}/${command}`
 
     try {
       await access(loc, constants.X_OK)
       console.log(`${command} is ${loc}`)
+    } catch {
+      continue
     }
   }
 
