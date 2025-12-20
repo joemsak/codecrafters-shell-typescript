@@ -2,60 +2,19 @@ import { createInterface } from "readline"
 import { access, constants } from 'node:fs/promises'
 import { execSync } from 'child_process'
 
+import { resolvePath } from './utils/path'
+import { say } from './utils/say'
+import { TYPE_PATTERN, type } from './builtins/type'
+import { ECHO_PATTERN, echo } from './builtins/type'
+
 const rl = createInterface({
   input: process.stdin,
   output: process.stdout,
+  prompt: "$ ",
 })
 
-const PATHS = process.env.PATH.split(':')
-const BUILTINS = ["echo", "exit", "type"]
-
-const ECHO_PATTERN = /^echo\s/
-const TYPE_PATTERN = /^type\s/
-
-const say = msg => {
-  rl.output.write(`${msg}\n`)
-}
-
-const echo = input => {
-  const toEcho = input.replace(ECHO_PATTERN, "")
-  say(toEcho)
-}
-
-const type = async input => {
-  const exe = input.replace(TYPE_PATTERN, "")
-
-  if (BUILTINS.includes(exe)) {
-    say(`${exe} is a shell builtin`)
-    return
-  }
-
-  const path = await getPath(exe);
-
-  if (path) {
-    say(`${exe} is ${path}`)
-  } else {
-    say(`${exe}: not found`)
-  }
-}
-
-const getPath = async command => {
-  const exe = command.replace(/\s[\w\s]+$/, "")
-
-  for (const path of PATHS) {
-    const loc = `${path}/${exe}`
-
-    try {
-      await access(loc, constants.X_OK)
-      return loc;
-    } catch {
-      continue
-    }
-  }
-}
-
 const callback = async input => {
-  const exePath = await getPath(input)
+  const exePath = await resolvePath(input)
 
   switch (true) {
     case input === "exit":
@@ -75,8 +34,9 @@ const callback = async input => {
       say(`${input}: command not found`)
   }
 
-  rl.question("$ ", callback)
+  rl.prompt()
 }
 
-rl.question("$ ", callback)
+rl.on("line", callback)
 
+rl.prompt();
