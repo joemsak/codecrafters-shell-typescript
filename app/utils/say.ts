@@ -1,4 +1,4 @@
-export const say = msg => {
-  rl.output.write(`${msg}\n`)
+export default output, msg => {
+  output.write(`${msg}\n`)
 }
 

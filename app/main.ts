@@ -1,9 +1,9 @@
 import { createInterface } from "readline"
-import { access, constants } from 'node:fs/promises'
 import { execSync } from 'child_process'
 
-import { resolvePath } from './utils/path'
-import { say } from './utils/say'
+import say from './utils/say'
+import resolvePath from './utils/path'
+
 import { TYPE_PATTERN, type } from './builtins/type'
 import { ECHO_PATTERN, echo } from './builtins/echo'
 
@@ -21,17 +21,17 @@ const callback = async input => {
       rl.close()
       return
     case TYPE_PATTERN.test(input):
-      await type(input)
+      await type(rl.output, input)
       break
     case ECHO_PATTERN.test(input):
-      echo(input)
+      echo(rl.output, input)
       break
     case typeof exePath !== "undefined":
       const result = execSync(input)
       rl.output.write(result)
       break
     default:
-      say(`${input}: command not found`)
+      say(rl.output, `${input}: command not found`)
   }
 
   rl.prompt()

@@ -1,6 +1,8 @@
+import { access, constants } from 'node:fs/promises'
+
 const PATHS = process.env.PATH.split(':')
 
-export const resolvePath = async command => {
+export default async command => {
   const exe = command.replace(/\s[\w\s]+$/, "")
 
   for (const path of PATHS) {
