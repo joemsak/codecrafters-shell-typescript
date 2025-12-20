@@ -9,7 +9,7 @@ const ECHO_PATTERN = /^echo\s/
 
 const echo = input => {
   const toEcho = input.replace(ECHO_PATTERN, "")
-  console.log(`${toEcho}\n`)
+  console.log(toEcho)
 }
 
 const callback = input => {
@@ -24,7 +24,6 @@ const callback = input => {
       console.error(`${input}: command not found`)
   }
 
-  console.log(input);
   rl.question("$ ", callback)
 }
 
