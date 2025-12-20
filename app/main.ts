@@ -15,7 +15,7 @@ const callback = input => {
     return
   }
 
-  if (/^echo\s/.match?(input)) {
+  if (input.match(/^echo\s/)) {
     echo(input)
   } else {
     console.error(`${input}: command not found`)
