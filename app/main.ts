@@ -5,7 +5,7 @@ const rl = createInterface({
   output: process.stdout,
 })
 
-const BUILTINS = ['echo', 'exit', 'type'];
+const BUILTINS = ["echo", "exit", "type"]
 
 const ECHO_PATTERN = /^echo\s/
 const TYPE_PATTERN = /^type\s/
