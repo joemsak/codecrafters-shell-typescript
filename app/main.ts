@@ -1,21 +1,28 @@
-import { createInterface } from "readline";
+import { createInterface } from "readline"
 
 const rl = createInterface({
   input: process.stdin,
   output: process.stdout,
-});
+})
+
+const echo = input => {
+  console.log(`${input.replace("echo ", "")}\n`)
+}
 
 const callback = input => {
   if (input === 'exit') {
-    rl.close();
-    return;
+    rl.close()
+    return
   }
 
-  if (/\Aecho/.match?(input)) console.log(`${input}\n`);
+  if (/^echo\s/.match?(input)) {
+    echo(input)
+  } else {
+    console.error(`${input}: command not found`)
+  }
 
-  console.error(`${input}: command not found`);
-  rl.question("$ ", callback);
-};
+  rl.question("$ ", callback)
+}
 
-rl.question("$ ", callback);
+rl.question("$ ", callback)
 
