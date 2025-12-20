@@ -1,7 +1,7 @@
 import { createInterface } from 'node:readline'
 import { spawn } from 'node:child_process'
 
-import say, { output } from './utils/io'
+import { output, print } from './utils/io'
 import findExecutable from './utils/findExecutable'
 
 import exit, { PATTERN as EXIT_PATTERN } from './builtins/exit'
@@ -40,7 +40,7 @@ const handleInput = async (input: string): Promise<void> => {
     return
   }
 
-  say(`${input}: command not found`)
+  print(`${input}: command not found`)
 }
 
 const main = async (): Promise<void> => {
