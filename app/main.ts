@@ -15,23 +15,23 @@ const TYPE_PATTERN = /^type\s/
 
 const echo = input => {
   const toEcho = input.replace(ECHO_PATTERN, "")
-  console.log(toEcho)
+  rl.output.write(`${toEcho}\n`)
 }
 
 const type = async input => {
   const exe = input.replace(TYPE_PATTERN, "")
 
   if (BUILTINS.includes(exe)) {
-    console.log(`${exe} is a shell builtin`)
+    echo(`${exe} is a shell builtin`)
     return
   }
 
   const path = getPath(exe);
 
   if (path) {
-    console.log(`${exe} is ${path}`)
+    echo(`${exe} is ${path}`)
   } else {
-    console.error(`${exe}: not found`)
+    echo(`${exe}: not found`)
   }
 }
 
@@ -65,10 +65,10 @@ const callback = async input => {
       break
     case exePath !== undefined:
       const result = execSync(input)
-      console.log(result.toString().trim())
+      rl.output.write(result)
       break
     default:
-      console.error(`${input}: command not found`)
+      echo(`${input}: command not found`)
   }
 
   rl.question("$ ", callback)
