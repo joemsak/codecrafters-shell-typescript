@@ -1,5 +1,7 @@
+import { exit } from 'node:process'
+
 export const PATTERN = /^exit(\s|$)/
 
 export default (code: integer): never => {
-  process.exit(code)
+  exit(code)
 }

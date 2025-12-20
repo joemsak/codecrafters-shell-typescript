@@ -1,7 +1,8 @@
 import { access, constants } from 'node:fs/promises'
 import { join, delimiter } from 'node:path'
+import { env } from 'node:process'
 
-const PATHS = (process.env.PATH ?? '').split(delimiter)
+const PATHS = (env.PATH ?? '').split(delimiter)
 
 export default async (command: string): Promise<string | undefined> => {
   const exe = command.split(/\s+/)[0]
