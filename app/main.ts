@@ -5,20 +5,23 @@ const rl = createInterface({
   output: process.stdout,
 })
 
+const ECHO_PATTERN = /^echo\s/
+
 const echo = input => {
-  console.log(`${input.replace("echo ", "")}\n`)
+  const toEcho = input.replace(ECHO_PATTERN, "")
+  console.log(`${toEcho}\n`)
 }
 
 const callback = input => {
-  if (input === 'exit') {
-    rl.close()
-    return
-  }
-
-  if (input.match(/^echo\s/)) {
-    echo(input)
-  } else {
-    console.error(`${input}: command not found`)
+  switch (input) {
+    case 'exit':
+      rl.close()
+      return
+    case ECHO_PATTERN:
+      echo(input)
+      break
+    default:
+      console.error(`${input}: command not found`)
   }
 
   rl.question("$ ", callback)
