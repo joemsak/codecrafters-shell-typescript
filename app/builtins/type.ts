@@ -1,7 +1,7 @@
 import findExecutable from '../utils/findExecutable'
 import { print } from '../utils/io'
 
-const BUILTINS = ['echo', 'exit', 'pwd', 'type'] as const
+const BUILTINS = ['cd', 'echo', 'exit', 'pwd', 'type'] as const
 
 export const PATTERN = /^type\s+/
 
