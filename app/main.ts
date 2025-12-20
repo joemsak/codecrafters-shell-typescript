@@ -40,7 +40,7 @@ const type = async input => {
 }
 
 const getPath = async command => {
-  const exe = command.replace(/\s\w+$/, "")
+  const exe = command.replace(/\s[\w\s]+$/, "")
 
   for (const path of PATHS) {
     const loc = `${path}/${exe}`
