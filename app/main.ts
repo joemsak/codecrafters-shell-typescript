@@ -26,6 +26,7 @@ const type = async input => {
     try {
       await access(loc, constants.X_OK)
       console.log(`${command} is ${loc}`)
+      return
     } catch {
       continue
     }
