@@ -3,10 +3,10 @@ import say from '../utils/say'
 
 const BUILTINS = ["echo", "exit", "type"] as const
 
-export const TYPE_PATTERN = /^type\s/
+export const PATTERN = /^type\s+/
 
-export const type = async (input: string): Promise<void> => {
-  const exe = input.replace(TYPE_PATTERN, "")
+export default async (input: string): Promise<void> => {
+  const exe = input.replace(PATTERN, "")
 
   if (BUILTINS.includes(exe as typeof BUILTINS[number])) {
     say(`${exe} is a shell builtin`)

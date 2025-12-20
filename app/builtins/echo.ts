@@ -1,9 +1,9 @@
 import say from '../utils/say'
 
-export const ECHO_PATTERN = /^echo\s/
+export const PATTERN = /^echo\s+/
 
-export const echo = (input: string): void => {
-  const toEcho = input.replace(ECHO_PATTERN, "")
+export default (input: string): void => {
+  const toEcho = input.replace(PATTERN, "")
   say(toEcho)
 }
 
