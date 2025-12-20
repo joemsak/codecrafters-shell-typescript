@@ -26,7 +26,7 @@ const type = async input => {
     return
   }
 
-  const path = getPath(exe);
+  const path = await getPath(exe);
 
   if (path) {
     echo(`${exe} is ${path}`)
