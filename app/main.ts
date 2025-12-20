@@ -19,6 +19,7 @@ const say = msg => {
 
 const echo = input => {
   const toEcho = input.replace(ECHO_PATTERN, "")
+  console.log(input)
   say(toEcho)
 }
 
