@@ -3,9 +3,10 @@ import { createInterface } from 'node:readline'
 import { input, output, print } from './utils/io'
 import runCommand from './utils/runCommand'
 
-import exit, { PATTERN as EXIT_PATTERN } from './builtins/exit'
-import type, { PATTERN as TYPE_PATTERN } from './builtins/type'
 import echo, { PATTERN as ECHO_PATTERN } from './builtins/echo'
+import exit, { PATTERN as EXIT_PATTERN } from './builtins/exit'
+import pwd, { PATTERN as PWD_PATTERN } from './builtins/pwd'
+import type, { PATTERN as TYPE_PATTERN } from './builtins/type'
 
 const rl = createInterface({
   input,
@@ -25,6 +26,11 @@ const handleInput = async (input: string): Promise<void> => {
 
   if (ECHO_PATTERN.test(input)) {
     echo(input)
+    return
+  }
+
+  if (PWD_PATTERN.test(input)) {
+    pwd()
     return
   }
 
