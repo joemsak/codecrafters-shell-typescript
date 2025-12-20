@@ -5,8 +5,9 @@ const rl = createInterface({
   output: process.stdout,
 });
 
-const callback = (answer) => {
-  console.error(`${answer}: command not found`);
+const callback = input => {
+  if (input == 'exit') rl.close();
+  console.error(`${input}: command not found`);
   rl.question("$ ", callback);
 };
 
