@@ -5,9 +5,11 @@ const rl = createInterface({
   output: process.stdout,
 });
 
-while(true) {
-  rl.question("$ ", (answer) => {
-    console.error(`${answer}: command not found`);
-    rl.close();
-  });
-};
+const respond = (answer) => {
+  console.error(`${answer}: command not found`);
+  rl.close();
+  rl.question("$ ", respond);
+});
+
+rl.question("$ ", respond);
+
