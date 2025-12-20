@@ -1,5 +1,6 @@
 import { createInterface } from "readline"
 import { access, constants } from 'node:fs/promises'
+import { exec } from 'child_process'
 
 const rl = createInterface({
   input: process.stdin,
