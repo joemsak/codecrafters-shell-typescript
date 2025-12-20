@@ -18,6 +18,12 @@ const echo = input => {
 
 const type = async input => {
   const command = input.replace(TYPE_PATTERN, "")
+
+  if (BUILTINS.includes(command)) {
+    console.log(`${command} is a shell builtin`)
+    return
+  }
+
   const paths = process.env.PATH.split(':')
 
   for (const path of paths) {
@@ -32,11 +38,7 @@ const type = async input => {
     }
   }
 
-  if (BUILTINS.includes(command)) {
-    console.log(`${command} is a shell builtin`)
-  } else {
-    console.error(`${command}: not found`)
-  }
+  console.error(`${command}: not found`)
 }
 
 const callback = async input => {
