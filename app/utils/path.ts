@@ -1,8 +1,8 @@
 import { access, constants } from 'node:fs/promises'
 
-const PATHS = process.env.PATH.split(':')
+const PATHS = (process.env.PATH ?? '').split(':')
 
-export default async command => {
+export default async (command: string): Promise<string | undefined> => {
   const exe = command.replace(/\s[\w\s]+$/, "")
 
   for (const path of PATHS) {
@@ -10,7 +10,7 @@ export default async command => {
 
     try {
       await access(loc, constants.X_OK)
-      return loc;
+      return loc
     } catch {
       continue
     }

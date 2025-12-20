@@ -1,7 +1,7 @@
 import { createInterface } from "readline"
 import { execSync } from 'child_process'
 
-import say from './utils/say'
+import say, { output } from './utils/say'
 import resolvePath from './utils/path'
 
 import { TYPE_PATTERN, type } from './builtins/type'
@@ -9,11 +9,11 @@ import { ECHO_PATTERN, echo } from './builtins/echo'
 
 const rl = createInterface({
   input: process.stdin,
-  output: process.stdout,
+  output,
   prompt: "$ ",
 })
 
-const callback = async input => {
+const callback = async (input: string): Promise<void> => {
   const exePath = await resolvePath(input)
 
   switch (true) {
@@ -21,17 +21,17 @@ const callback = async input => {
       rl.close()
       return
     case TYPE_PATTERN.test(input):
-      await type(rl.output, input)
+      await type(input)
       break
     case ECHO_PATTERN.test(input):
-      echo(rl.output, input)
+      echo(input)
       break
-    case typeof exePath !== "undefined":
+    case exePath !== undefined:
       const result = execSync(input)
-      rl.output.write(result)
+      output.write(result)
       break
     default:
-      say(rl.output, `${input}: command not found`)
+      say(`${input}: command not found`)
   }
 
   rl.prompt()
