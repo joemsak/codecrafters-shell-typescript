@@ -18,25 +18,27 @@ const echo = input => {
 }
 
 const type = async input => {
-  const command = input.replace(TYPE_PATTERN, "")
+  const exe = input.replace(TYPE_PATTERN, "")
 
-  if (BUILTINS.includes(command)) {
-    console.log(`${command} is a shell builtin`)
+  if (BUILTINS.includes(exe)) {
+    console.log(`${exe} is a shell builtin`)
     return
   }
 
-  const path = getPath(command);
+  const path = getPath(exe);
 
   if (path) {
-    console.log(`${command} is ${path}`)
+    console.log(`${exe} is ${path}`)
   } else {
-    console.error(`${command}: not found`)
+    console.error(`${exe}: not found`)
   }
 }
 
 const getPath = async command => {
+  const exe = command.replace(/\s\w+$/)
+
   for (const path of PATHS) {
-    const loc = `${path}/${command}`
+    const loc = `${path}/${exe}`
 
     try {
       await access(loc, constants.X_OK)
@@ -48,6 +50,8 @@ const getPath = async command => {
 }
 
 const callback = async input => {
+  const exePath = getPath(input)
+
   switch (true) {
     case input === "exit":
       rl.close()
@@ -56,7 +60,10 @@ const callback = async input => {
       await type(input)
       break
     case ECHO_PATTERN.test(input):
-      echo(input)
+      echo(exePath, input)
+      break
+    case exePath !== undefined:
+      exec(input)
       break
     default:
       console.error(`${input}: command not found`)
