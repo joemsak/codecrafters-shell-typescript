@@ -1,5 +1,5 @@
-import { createInterface } from 'readline'
-import { spawn } from 'child_process'
+import { createInterface } from 'node:readline'
+import { spawn } from 'node:child_process'
 
 import say, { output } from './utils/say'
 import resolvePath from './utils/path'
