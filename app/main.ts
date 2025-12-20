@@ -5,9 +5,9 @@ const rl = createInterface({
   output: process.stdout,
 });
 
-rl.question("$ ", (answer) => {
-  while(true) {
+while(true) {
+  rl.question("$ ", (answer) => {
     console.error(`${answer}: command not found`);
     rl.close();
-  }
-});
+  });
+};
