@@ -4,6 +4,7 @@ import { spawn } from 'node:child_process'
 import say, { output } from './utils/io'
 import findExecutable from './utils/findExecutable'
 
+import exit, { PATTERN as EXIT_PATTERN } from './builtins/exit'
 import type, { PATTERN as TYPE_PATTERN } from './builtins/type'
 import echo, { PATTERN as ECHO_PATTERN } from './builtins/echo'
 
@@ -14,9 +15,8 @@ const rl = createInterface({
 })
 
 const handleInput = async (input: string): Promise<void> => {
-  if (input === 'exit' || input.startsWith('exit ')) {
-    const code = parseInt(input.split(/\s+/)[1] ?? '0', 10)
-    process.exit(code)
+  if (EXIT_PATTERN.test(input)) {
+    exit(input)
   }
 
   if (TYPE_PATTERN.test(input)) {
