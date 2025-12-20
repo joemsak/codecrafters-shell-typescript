@@ -19,7 +19,6 @@ const say = msg => {
 
 const echo = input => {
   const toEcho = input.replace(ECHO_PATTERN, "")
-  console.log(input)
   say(toEcho)
 }
 
@@ -66,7 +65,7 @@ const callback = async input => {
       await type(input)
       break
     case ECHO_PATTERN.test(input):
-      say(exePath, input)
+      echo(input)
       break
     case exePath !== undefined:
       const result = execSync(input)
