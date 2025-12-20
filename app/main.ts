@@ -1,4 +1,5 @@
 import { createInterface } from "readline"
+import { access, constants } from 'node:fs/promises'
 
 const rl = createInterface({
   input: process.stdin,
@@ -17,6 +18,18 @@ const echo = input => {
 
 const type = input => {
   const command = input.replace(TYPE_PATTERN, "")
+  const paths = process.env.PATH.split(':')
+
+  let loc = ''
+
+  for (const path of paths) {
+    loc = `${path}/${command}`
+
+    try {
+      await access(loc, constants.X_OK)
+      console.log(`${command} is ${loc}`)
+    }
+  }
 
   if (BUILTINS.includes(command)) {
     console.log(`${command} is a shell builtin`)
