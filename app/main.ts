@@ -1,4 +1,4 @@
-import { createInterface } from "readline"
+import { createInterface } from 'readline'
 import { spawn } from 'child_process'
 
 import say, { output } from './utils/say'
@@ -10,12 +10,12 @@ import echo, { PATTERN as ECHO_PATTERN } from './builtins/echo'
 const rl = createInterface({
   input: process.stdin,
   output,
-  prompt: "$ ",
+  prompt: '$ ',
 })
 
 const handleInput = async (input: string): Promise<void> => {
-  if (input === "exit" || input.startsWith("exit ")) {
-    const code = parseInt(input.split(/\s+/)[1] ?? "0", 10)
+  if (input === 'exit' || input.startsWith('exit ')) {
+    const code = parseInt(input.split(/\s+/)[1] ?? '0', 10)
     process.exit(code)
   }
 
