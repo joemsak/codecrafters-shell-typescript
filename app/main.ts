@@ -1,6 +1,6 @@
 import { createInterface } from "readline"
 import { access, constants } from 'node:fs/promises'
-import { exec } from 'child_process'
+import { execSync } from 'child_process'
 
 const rl = createInterface({
   input: process.stdin,
@@ -64,7 +64,7 @@ const callback = async input => {
       echo(exePath, input)
       break
     case exePath !== undefined:
-      await exec(input, (error, stdout, stderr) => console.log(stdout))
+      console.log(execSync(input))
       break
     default:
       console.error(`${input}: command not found`)
