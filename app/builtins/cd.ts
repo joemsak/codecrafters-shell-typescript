@@ -1,10 +1,15 @@
-import { chdir } from 'node:process'
+import { chdir, env } from 'node:process'
 
 import { print } from '../utils/io'
 
 export const PATTERN = /^cd\s+/
 
 export default (path: string): void => {
+  if (/^~$/.test(path.trim())) {
+    chdir(env.HOME)
+    return
+  }
+
   try {
     chdir(path)
   } catch(err) {
