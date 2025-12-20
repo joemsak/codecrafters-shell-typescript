@@ -1,8 +1,8 @@
 import { createInterface } from 'node:readline'
 import { spawn } from 'node:child_process'
 
-import say, { output } from './utils/say'
-import resolvePath from './utils/path'
+import say, { output } from './utils/io'
+import findExecutable from './utils/findExecutable'
 
 import type, { PATTERN as TYPE_PATTERN } from './builtins/type'
 import echo, { PATTERN as ECHO_PATTERN } from './builtins/echo'
@@ -29,7 +29,7 @@ const handleInput = async (input: string): Promise<void> => {
     return
   }
 
-  const exePath = await resolvePath(input)
+  const exePath = await findExecutable(input)
   if (exePath) {
     const [cmd, ...args] = input.split(/\s+/)
     const child = spawn(cmd, args, { stdio: 'inherit' })

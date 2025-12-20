@@ -1,4 +1,4 @@
-import say from '../utils/say'
+import say from '../utils/io'
 
 export const PATTERN = /^echo\s+/
 

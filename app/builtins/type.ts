@@ -1,5 +1,5 @@
-import resolvePath from '../utils/path'
-import say from '../utils/say'
+import findExecutable from '../utils/findExecutable'
+import say from '../utils/io'
 
 const BUILTINS = ['echo', 'exit', 'type'] as const
 
@@ -13,7 +13,7 @@ export default async (input: string): Promise<void> => {
     return
   }
 
-  const path = await resolvePath(exe)
+  const path = await findExecutable(exe)
 
   if (path) {
     say(`${exe} is ${path}`)
