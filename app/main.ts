@@ -8,7 +8,6 @@ const rl = createInterface({
 const callback = (answer) => {
   console.error(`${answer}: command not found`);
   rl.question("$ ", callback);
-  rl.close();
 });
 
 rl.question("$ ", callback);
