@@ -56,7 +56,6 @@ const getPath = async command => {
 
 const callback = async input => {
   const exePath = await getPath(input)
-  console.log(typeof exepath)
 
   switch (true) {
     case input === "exit":
@@ -68,7 +67,7 @@ const callback = async input => {
     case ECHO_PATTERN.test(input):
       echo(input)
       break
-    case typeof exePath !== undefined:
+    case typeof exePath !== "undefined":
       const result = execSync(input)
       rl.output.write(result)
       break
