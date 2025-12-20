@@ -16,7 +16,7 @@ const echo = input => {
   console.log(toEcho)
 }
 
-const type = input => {
+const type = async input => {
   const command = input.replace(TYPE_PATTERN, "")
   const paths = process.env.PATH.split(':')
 
