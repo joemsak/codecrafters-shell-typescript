@@ -5,7 +5,7 @@ import { print } from '../utils/io'
 export const PATTERN = /^cd\s+/
 
 export default (path: string): void => {
-  if (/^~$/.test(path.trim())) {
+  if (path.trim() === '~') {
     chdir(env.HOME)
     return
   }
