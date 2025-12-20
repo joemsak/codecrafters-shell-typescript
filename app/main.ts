@@ -39,13 +39,13 @@ const type = async input => {
   }
 }
 
-const callback = input => {
+const callback = async input => {
   switch (true) {
     case input === "exit":
       rl.close()
       return
     case TYPE_PATTERN.test(input):
-      type(input)
+      await type(input)
       break
     case ECHO_PATTERN.test(input):
       echo(input)
