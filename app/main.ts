@@ -1,7 +1,7 @@
 import { createInterface } from 'node:readline'
 import { spawn } from 'node:child_process'
 
-import { output, print } from './utils/io'
+import { input, output, print } from './utils/io'
 import findExecutable from './utils/findExecutable'
 
 import exit, { PATTERN as EXIT_PATTERN } from './builtins/exit'
@@ -9,7 +9,7 @@ import type, { PATTERN as TYPE_PATTERN } from './builtins/type'
 import echo, { PATTERN as ECHO_PATTERN } from './builtins/echo'
 
 const rl = createInterface({
-  input: process.stdin,
+  input,
   output,
   prompt: '$ ',
 })
