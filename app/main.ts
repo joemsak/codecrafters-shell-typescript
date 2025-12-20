@@ -6,6 +6,7 @@ const rl = createInterface({
   output: process.stdout,
 })
 
+const PATHS = process.env.PATH.split(':')
 const BUILTINS = ["echo", "exit", "type"]
 
 const ECHO_PATTERN = /^echo\s/
@@ -24,21 +25,26 @@ const type = async input => {
     return
   }
 
-  const paths = process.env.PATH.split(':')
+  const path = getPath(command);
 
-  for (const path of paths) {
+  if (path) {
+    console.log(`${command} is ${path}`)
+  } else {
+    console.error(`${command}: not found`)
+  }
+}
+
+const getPath = async command => {
+  for (const path of PATHS) {
     const loc = `${path}/${command}`
 
     try {
       await access(loc, constants.X_OK)
-      console.log(`${command} is ${loc}`)
-      return
+      return loc;
     } catch {
       continue
     }
   }
-
-  console.error(`${command}: not found`)
 }
 
 const callback = async input => {
