@@ -19,6 +19,7 @@ const callback = input => {
       return
     case ECHO_PATTERN.test(input):
       echo(input)
+      break
     default:
       console.error(`${input}: command not found`)
   }
