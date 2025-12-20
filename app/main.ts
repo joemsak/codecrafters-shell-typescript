@@ -5,7 +5,7 @@ import { execSync } from 'child_process'
 import { resolvePath } from './utils/path'
 import { say } from './utils/say'
 import { TYPE_PATTERN, type } from './builtins/type'
-import { ECHO_PATTERN, echo } from './builtins/type'
+import { ECHO_PATTERN, echo } from './builtins/echo'
 
 const rl = createInterface({
   input: process.stdin,
