@@ -18,7 +18,7 @@ const echo = input => {
 const type = input => {
   const command = input.replace(TYPE_PATTERN, "")
 
-  if (BUILTINS.include(command)) {
+  if (BUILTINS.includes(command)) {
     console.log(`${command} is a shell builtin`)
   } else {
     console.error(`${command}: not found`)
