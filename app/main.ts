@@ -13,31 +13,46 @@ const rl = createInterface({
   prompt: "$ ",
 })
 
-const callback = async (input: string): Promise<void> => {
-  const exePath = await resolvePath(input)
-
-  switch (true) {
-    case input === "exit":
-      rl.close()
-      return
-    case TYPE_PATTERN.test(input):
-      await type(input)
-      break
-    case ECHO_PATTERN.test(input):
-      echo(input)
-      break
-    case exePath !== undefined:
-      const [cmd, ...args] = input.split(/\s+/)
-      const child = spawn(cmd, args, { stdio: 'inherit' })
-      await new Promise<void>(resolve => child.on('close', resolve))
-      break
-    default:
-      say(`${input}: command not found`)
+const handleInput = async (input: string): Promise<void> => {
+  if (input === "exit" || input.startsWith("exit ")) {
+    const code = parseInt(input.split(/\s+/)[1] ?? "0", 10)
+    process.exit(code)
   }
 
-  rl.prompt()
+  if (TYPE_PATTERN.test(input)) {
+    await type(input)
+    return
+  }
+
+  if (ECHO_PATTERN.test(input)) {
+    echo(input)
+    return
+  }
+
+  const exePath = await resolvePath(input)
+  if (exePath) {
+    const [cmd, ...args] = input.split(/\s+/)
+    const child = spawn(cmd, args, { stdio: 'inherit' })
+    await new Promise<void>((resolve) => {
+      child.on('error', resolve)
+      child.on('close', resolve)
+    })
+    return
+  }
+
+  say(`${input}: command not found`)
 }
 
-rl.on("line", callback)
+const main = async (): Promise<void> => {
+  rl.prompt()
 
-rl.prompt();
+  for await (const raw of rl) {
+    const input = raw.trim()
+    if (input) {
+      await handleInput(input)
+    }
+    rl.prompt()
+  }
+}
+
+main()
