@@ -64,7 +64,8 @@ const callback = async input => {
       echo(exePath, input)
       break
     case exePath !== undefined:
-      console.log(execSync(input))
+      const result = execSync(input)
+      console.log(result.toString())
       break
     default:
       console.error(`${input}: command not found`)
