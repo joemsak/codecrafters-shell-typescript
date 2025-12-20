@@ -24,6 +24,7 @@ const callback = input => {
       console.error(`${input}: command not found`)
   }
 
+  console.log(input);
   rl.question("$ ", callback)
 }
 
